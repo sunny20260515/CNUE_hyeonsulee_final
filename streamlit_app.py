@@ -133,21 +133,21 @@ else:
 
 st.markdown("---")
 
-# 5. 실생활 상황 활용 어림 문제
-st.header("5. 실생활 어림 빈칸 문제")
+# 5. 실생활 상황 활용 반올림 문제
+st.header("5. 실생활 반올림 빈칸 문제")
 scenarios = [
-    ("마트에서 사과 47개를 샀어요. 대략 ___개입니다.", 50),
-    ("버스에 128명이 타면, 약 ___명입니다.", 130),
-    ("숙제 문제는 64문제였어요. 약 ___문제입니다.", 60),
-    ("공원에 꽃이 236송이 있어요. 약 ___송이입니다.", 240),
-    ("책이 195권 있어요. 약 ___권입니다.", 200),
+    ("마트에서 사과 47개를 샀어요. 반올림하여 ___개입니다.", 50),
+    ("버스에 128명이 타면, 반올림하여 약 ___명입니다.", 130),
+    ("숙제 문제는 64문제였어요. 반올림하여 약 ___문제입니다.", 60),
+    ("공원에 꽃이 236송이 있어요. 반올림하여 약 ___송이입니다.", 240),
+    ("책이 195권 있어요. 반올림하여 약 ___권입니다.", 200),
 ]
 
 scenario_text, scenario_answer = random.choice(scenarios)
 st.write(f"문제: {scenario_text}")
-estimate_answer = st.text_input("어림하여 채울 숫자를 쓰세요", key="estimate_input")
+estimate_answer = st.text_input("반올림하여 쓸 숫자를 입력하세요", key="estimate_input")
 if st.button("확인", key="estimate_check"):
     if estimate_answer.isdigit() and int(estimate_answer) == scenario_answer:
-        st.success("정답입니다! 어림하기 잘했어요.")
+        st.success("정답입니다! 반올림하기 잘했어요.")
     else:
         st.error(f"틀렸어요. 정답은 {scenario_answer}입니다.")
