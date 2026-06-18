@@ -109,45 +109,58 @@ st.markdown("---")
 
 # 4. 수직선 표시하기
 st.header("4. 수직선 표시하기")
-st.write("수직선을 보고 숫자의 위치를 확인해보세요.")
-start = st.slider("수직선 시작값", min_value=-10, max_value=0, value=-5)
-end = st.slider("수직선 끝값", min_value=0, max_value=10, value=5)
-if start >= end:
-    st.error("시작값은 끝값보다 작아야 합니다.")
-else:
-    ticks = list(range(start, end + 1))
-    line = " "
-    for value in ticks:
-        if value == 0:
-            line += "0"
-        else:
-            line += "|"
-        line += "   "
+st.write("수직선 왼쪽에는 6200, 오른쪽에는 6300을 넣고, 그 사이를 10칸으로 나누어 보세요.")
 
-    labels = ""
-    for value in ticks:
-        label = str(value)
-        labels += label + " " * (4 - len(label))
+ticks = [6200 + 10 * i for i in range(11)]
+line = "6200" + "-" * 58 + "6300"
+labels = "".join([str(tick).ljust(6) for tick in ticks])
 
-    st.code(line + "\n" + labels, language="text")
+st.code(line + "\n" + labels, language="text")
+
+st.write("6230과 6280은 수직선에서 어느 쪽에 더 가까운가요?")
+answer1 = st.radio("1번. 6230은 6200과 6300 중 어느 쪽에 더 가까운가요?", options=["6200", "6300"], key="closer1")
+answer2 = st.radio("2번. 6280은 6200과 6300 중 어느 쪽에 더 가까운가요?", options=["6200", "6300"], key="closer2")
+
+if st.button("정답 확인", key="closer_check"):
+    correct1 = "6200"
+    correct2 = "6300"
+    if answer1 == correct1:
+        st.success("1번 정답입니다! 6230은 6200에 더 가깝습니다.")
+    else:
+        st.error("1번이 틀렸습니다. 6230은 6200에 더 가깝습니다.")
+
+    if answer2 == correct2:
+        st.success("2번 정답입니다! 6280은 6300에 더 가깝습니다.")
+    else:
+        st.error("2번이 틀렸습니다. 6280은 6300에 더 가깝습니다.")
 
 st.markdown("---")
 
 # 5. 실생활 상황 활용 반올림 문제
-st.header("5. 실생활 반올림 빈칸 문제")
-scenarios = [
-    ("마트에서 사과 47개를 샀어요. 반올림하여 ___개입니다.", 50),
-    ("버스에 128명이 타면, 반올림하여 약 ___명입니다.", 130),
-    ("숙제 문제는 64문제였어요. 반올림하여 약 ___문제입니다.", 60),
-    ("공원에 꽃이 236송이 있어요. 반올림하여 약 ___송이입니다.", 240),
-    ("책이 195권 있어요. 반올림하여 약 ___권입니다.", 200),
-]
+st.header("5. 실생활 속 상황을 활용한 나만의 어림 문제 만들기")
+st.write("아래 세 가지 상황에 맞는 나만의 문제를 만들어 보고, 답을 자유롭게 적어보세요.")
 
-scenario_text, scenario_answer = random.choice(scenarios)
-st.write(f"문제: {scenario_text}")
-estimate_answer = st.text_input("반올림하여 쓸 숫자를 입력하세요", key="estimate_input")
-if st.button("확인", key="estimate_check"):
-    if estimate_answer.isdigit() and int(estimate_answer) == scenario_answer:
-        st.success("정답입니다! 반올림하기 잘했어요.")
-    else:
-        st.error(f"틀렸어요. 정답은 {scenario_answer}입니다.")
+st.write("1번. 반올림을 활용하여 문제 만들기")
+rounding_problem = st.text_area("문제를 직접 적어보세요.", key="custom_rounding_problem")
+rounding_answer = st.text_input("답을 적어보세요 (정답은 없어요)", key="custom_rounding_answer")
+
+st.write("2번. 올림을 활용하여 문제 만들기")
+ceil_problem = st.text_area("문제를 직접 적어보세요.", key="custom_ceil_problem")
+ceil_answer = st.text_input("답을 적어보세요 (정답은 없어요)", key="custom_ceil_answer")
+
+st.write("3번. 버림을 활용하여 문제 만들기")
+floor_problem = st.text_area("문제를 직접 적어보세요.", key="custom_floor_problem")
+floor_answer = st.text_input("답을 적어보세요 (정답은 없어요)", key="custom_floor_answer")
+
+if st.button("제출", key="custom_submit"):
+    st.info("이 문제는 정답이 정해져 있지 않습니다. 내 생각대로 문제를 만들고 답을 적어보았어요!")
+    st.write("### 제출한 내용")
+    st.write("**1번 반올림 문제**")
+    st.write(rounding_problem)
+    st.write("답: " + rounding_answer)
+    st.write("**2번 올림 문제**")
+    st.write(ceil_problem)
+    st.write("답: " + ceil_answer)
+    st.write("**3번 버림 문제**")
+    st.write(floor_problem)
+    st.write("답: " + floor_answer)
